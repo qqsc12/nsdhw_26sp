@@ -66,25 +66,33 @@ Example usage of the proposed library:
 Technical Schedule
 ==================
 
-* **Week 1 (Mar 16 - Mar 22)**: Set up CMake and C++ data structures.
+* **Week 1 (Mar 23 - Mar 29)**: Set up CMake and C++ data structures. 
   Implement core data containers for B1500 VI measurement data.
-* **Week 2 (Mar 23 - Mar 29)**: Implement CSV parser and basic kernels:
-  ``mean()``, ``variance()``, and ``get_column()``. Adopt a 
-  "test-as-you-code" workflow to verify each function immediately.
-* **Week 3 (Mar 30 - Apr 05)**: Integrate pybind11 for Python wrapper 
-  and develop ``filter_by_voltage()``. Write ``pytest`` cases to ensure 
-  consistency between C++ and Python outputs.
-* **Week 4 (Apr 06 - Apr 12)**: System architecture review and 
-  documentation. Prepare the initial draft of the final presentation 
-  while ensuring code stability.
-* **Week 5 (Apr 13 - Apr 19)**: Performance benchmarking for large-scale 
+  **Execute: Create ``test_kernel.cpp`` to verify memory alignment.**
+* **Week 2 (Mar 30 - Apr 05)**: Implement CSV parser and basic kernels:
+  ``mean()``, ``variance()``. 
+  **Execute: Use ``assert`` to verify mathematical correctness immediately.**
+* **Week 3 (Apr 06 - Apr 12)**: Integrate pybind11 for Python wrapper.
+  **Execute: Implement ``pytest`` suite to ensure zero-copy data integrity.**
+* **Week 4 (Apr 13 - Apr 19)**: System architecture review and documentation.
+  Prepare the initial draft of the final presentation.
+* **Week 5 (Apr 20 - Apr 26)**: Performance benchmarking for large-scale 
   B1500 datasets and finalize the presentation slides.
 
 Testing Plan
 ============
-* **Continuous Testing**: Follow the "test-as-you-code" principle by 
-  writing unit tests immediately after implementing each C++ function.
-* **Unit Testing**: Use ``pytest`` to verify the mathematical 
-  correctness of kernels like ``mean()`` and ``variance()``.
-* **Performance**: Profile processing time for files > 100MB to 
-  ensure the columnar array provides the expected speedup.
+To ensure the "test-as-you-code" principle is executable:
+
+1. **Unit Testing (C++ Level)**:
+   * Use custom ``assert`` statements in ``test_kernel.cpp``.
+   * Focus: Verify ``ColumnarArray`` template precision (double/float).
+
+2. **Python-C++ Integration Testing**:
+   * Use ``pytest`` to exercise the **pybind11** interface.
+   * Focus: Confirm **zero-copy** data transfer from C++ to Python.
+
+3. **Data Robustness**:
+   * Test with "Dirty CSV" (irregular B1500 headers) to ensure stability.
+
+4. **Automation via Bash**:
+   * Implement a ``run_test.sh`` script to trigger all tests immediately.
